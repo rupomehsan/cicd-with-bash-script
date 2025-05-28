@@ -12,7 +12,7 @@ class RunModuleCommands extends Command
      *
      * @var string
      */
-    protected $signature = 'run:module-commands';
+    protected $signature = 'run:modules';
 
     /**
      * The console command description.
