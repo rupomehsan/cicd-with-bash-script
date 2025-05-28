@@ -69,6 +69,9 @@
       />
 
       <side-bar-single-menu :icon="`fa fa-plus`" :menu_title="`TestOneThree`"  :route_name="`AllTestOneThree`" />
+<side-bar-single-menu :icon="`fa fa-plus`" :menu_title="`ProductCategory`"  :route_name="`AllProductCategory`" />
+<side-bar-single-menu :icon="`fa fa-plus`" :menu_title="`ProductSubCategory`"  :route_name="`AllProductSubCategory`" />
+<side-bar-single-menu :icon="`fa fa-plus`" :menu_title="`Product`"  :route_name="`AllProduct`" />
 <!-- Management end -->
     </ul>
   </div>
