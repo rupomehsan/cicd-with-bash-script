@@ -2,15 +2,13 @@
 
 namespace App\Console;
 
-use App\Console\Commands\RunModuleCommands;
+
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
-    protected $commands = [
-        RunModuleCommands::class,
-    ];
+   
     /**
      * Define the application's command schedule.
      */

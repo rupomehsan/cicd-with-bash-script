@@ -29,24 +29,24 @@ export default {
     await this.check_is_auth();
     await this.get_all_website_settings();
 
-    // if (this.is_auth) {
-    //   let prev_url = window.sessionStorage.getItem("prevurl");
-    //   if (this.auth_info?.role_id == 1) {
-    //     window.location.href = "/super-admin#/dashboard";
-    //     if (this.$route.path === "/super-admin#") {
-    //       this.$router.push("/dashboard");
-    //     }
-    //     window.location.hash = prev_url || "/super-admin#/dashboard";
-    //   } else if (this.auth_info?.role_id == 2) {
-    //     window.location.href = "/employee#/dashboard";
-    //     if (this.$route.path === "/employee#") {
-    //       this.$router.push("/dashboard");
-    //     }
-    //     window.location.hash = prev_url || "/employee#/dashboard";
-    //   }
-    // } else {
-    //   window.location.href = "login";
-    // }
+    if (this.is_auth) {
+      let prev_url = window.sessionStorage.getItem("prevurl");
+      if (this.auth_info?.role_id == 1) {
+        window.location.href = "/super-admin#/dashboard";
+        if (this.$route.path === "/super-admin#") {
+          this.$router.push("/dashboard");
+        }
+        window.location.hash = prev_url || "/super-admin#/dashboard";
+      } else if (this.auth_info?.role_id == 2) {
+        window.location.href = "/admin#/dashboard";
+        if (this.$route.path === "/admin#") {
+          this.$router.push("/dashboard");
+        }
+        window.location.hash = prev_url || "/admin#/dashboard";
+      }
+    } else {
+      window.location.href = "login";
+    }
   },
   methods: {
     ...mapActions(auth_store, {

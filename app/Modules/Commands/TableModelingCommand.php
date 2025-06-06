@@ -15,116 +15,108 @@ class TableModelingCommand extends Command
     protected $description = 'Create a folder and files in the app directory';
 
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
+    protected $moduleName;
+    protected $viewModuleName;
+    protected $fields = [];
+    protected $baseDirectory;
+    protected $modelDirectory;
+    protected $databaseDirectory;
+    protected $finalModule;
+    protected $moduleDir;
+    protected $modulePath;
+    protected $migrationFile;
+    protected $modelFile;
+    protected $tableName;
+
+
 
     public function handle()
     {
+        $this->initializeArguments();
+        $this->parseFields();
+        $this->prepareDirectories();
+        $this->generateFiles();
+        $this->runMigration();
+    }
 
-        $moduleName = $this->argument('module_name');
-        $ViewModuleName = $this->argument('module_name');
-        // $migration = $this->option('m');
-        // $seed = $this->option('seed');
-        $fields = [];
+    protected function initializeArguments()
+    {
+        $this->moduleName = $this->argument('module_name');
+        $this->viewModuleName = $this->moduleName;
+    }
 
-
-
-        // Check if the field argument is provided
+    protected function parseFields()
+    {
         if ($this->hasArgument('[field]') && $this->argument('[field]')) {
-            $fieldName = $this->argument('[field]');
-            $fieldName = str_replace('[', '', $fieldName);
-            $fieldName = str_replace(']', '', $fieldName);
-            $fieldName = explode(',', $fieldName);
-            foreach ($fieldName as $item) {
-                $fields[] =  explode(':', $item);
-            }
+            $fieldRaw = str_replace(['[', ']'], '', $this->argument('[field]'));
+            $this->fields = collect(explode(',', $fieldRaw))->map(fn($f) => explode(':', $f))->toArray();
         }
+    }
 
+    protected function prepareDirectories()
+    {
+        $this->baseDirectory = app_path("Modules/Management/");
+        $parts = explode('/', $this->moduleName);
+        $this->finalModule = end($parts);
 
+        if (count($parts) > 1) {
+            array_pop($parts);
+            $this->moduleDir = implode('/', $parts);
+            $fullPath = $this->baseDirectory . $this->moduleDir;
 
-
-
-        $baseDirectory = app_path("Modules/Management/");
-        $format_dir = explode('/', $moduleName);
-        $module_dir = null;
-
-        if (count($format_dir) > 1) {
-            $moduleName = end($format_dir);
-            array_pop($format_dir); //if do not make last name folder
-            $module_dir = implode('/', $format_dir);
-            if (!File::isDirectory($baseDirectory . $module_dir)) {
-                mkdir($baseDirectory . $module_dir, 0777, true);
-            }
-            $baseDirectory = $baseDirectory . $module_dir . '/';
-        }
-
-        $table = Str::plural((Str::snake($moduleName)));
-
-
-
-
-        $migrationtable = 'create_' . $table . '_table.php';
-        $model = $moduleName . 'Model.php';
-        $actionFiles = [
-            $model,
-            $migrationtable,
-
-        ];
-
-
-
-        if ($module_dir != null) {
-            $module_name = $module_dir . '/' . $moduleName;
-        } else {
-            $module_name = $moduleName;
-        }
-
-
-
-        $ModelDirectory = $baseDirectory  . '/Models';
-
-        if (!File::isDirectory($ModelDirectory)) {
-            File::makeDirectory($ModelDirectory);
-        }
-
-
-
-        $DatabaseDirectory = $baseDirectory  . '/Database';
-        if (!File::isDirectory($DatabaseDirectory)) {
-            File::makeDirectory($DatabaseDirectory);
-        }
-
-        foreach ($actionFiles as $file) {
-            if ($file == $model) {
-
-                File::put($ModelDirectory . '/' . $file, TableModel($module_name, $moduleName));
-            }
-            if ($file == $migrationtable) {
-
-                File::put($DatabaseDirectory  . '/' . $file, TableMigration($module_name, $fields));
-            }
-        }
-
-
-
-        if (true) {
-            $table_name = '';
-            $formated_module = explode('/', $ViewModuleName);
-            if (count($formated_module) > 1) {
-                array_pop($formated_module);
-                $moduleName = implode('/', $formated_module);
-                $moduleName = Str::replace("/", "\\", $moduleName);
-                $table_name = Str::plural((Str::snake($formated_module[count($formated_module) - 1])));
-            } else {
-                $table_name = Str::plural((Str::snake($moduleName)));
-                $moduleName = Str::replace("/", "\\", $moduleName);
+            if (!File::isDirectory($fullPath)) {
+                File::makeDirectory($fullPath, 0777, true);
             }
 
-
-            $migrationPath = "\App\\Modules\\Management\\{$moduleName}\\Database\\create_{$table_name}_table.php";
-            Artisan::call('migrate', ['--path' => $migrationPath]);
+            $this->baseDirectory = $fullPath . '/';
         }
+
+        $this->tableName = Str::plural(Str::snake($this->finalModule));
+        $this->migrationFile = "create_{$this->tableName}_table.php";
+        $this->modelFile = "{$this->finalModule}Model.php";
+        $this->modulePath = $this->moduleDir ? "{$this->moduleDir}/{$this->finalModule}" : $this->finalModule;
+
+        $this->modelDirectory = $this->baseDirectory . 'Models';
+        $this->databaseDirectory = $this->baseDirectory . 'Database';
+
+        if (!File::isDirectory($this->modelDirectory)) {
+            File::makeDirectory($this->modelDirectory, 0777, true);
+        }
+
+        if (!File::isDirectory($this->databaseDirectory)) {
+            File::makeDirectory($this->databaseDirectory, 0777, true);
+        }
+    }
+
+    protected function generateFiles()
+    {
+        File::put(
+            "{$this->modelDirectory}/{$this->modelFile}",
+            TableModel($this->modulePath, $this->finalModule)
+        );
+
+        File::put(
+            "{$this->databaseDirectory}/{$this->migrationFile}",
+            TableMigration($this->modulePath, $this->fields)
+        );
+    }
+
+    protected function runMigration()
+    {
+         // Split the full module path
+         $parts = explode('/', $this->modulePath);
+
+         // Get the last part as the model/table base name
+         $lastPart = array_pop($parts); // BlogBlogCategory
+         $tableName = Str::plural(Str::snake($lastPart)); // blog_blog_categories
+ 
+         // Remaining parts as the module directory
+         $moduleDirectory = implode('/', $parts); // BlogManagement/Blog
+         $moduleNamespace = Str::replace('/', '\\', $moduleDirectory); // BlogManagement\Blog
+ 
+
+        $path = "\\App\\Modules\\Management\\{$moduleNamespace}\\Database\\create_{$tableName}_table.php";
+
+        Artisan::call('migrate', ['--path' => $path]);
     }
 }

@@ -86,11 +86,11 @@
               </tr>
 
               <tr>
-                <td>Employee</td>
+                <td>Admin</td>
                 <!-- <td>@12345678</td> -->
                 <td>
                   <button
-                    @click="setPassword('employee@gmail.com')"
+                    @click="setPassword('admin@gmail.com')"
                     class="btn btn-outline-info"
                   >
                     Login
@@ -132,7 +132,7 @@ export default {
             if (data.user?.role_id == 1) {
               window.location.href = "super-admin#/dashboard";
             } else if (data.user?.role_id == 2) {
-              window.location.href = "employee#/dashboard";
+              window.location.href = "admin#/dashboard";
             }
           }
         }

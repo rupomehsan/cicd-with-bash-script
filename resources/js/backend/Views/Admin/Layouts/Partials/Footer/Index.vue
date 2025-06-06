@@ -1,5 +1,5 @@
 <template>
-    <div class="right-sidebar right-toggled" :class="rightToggle ? 'right-toggled' : ''">
+    <div class="right-sidebar" :class="rightToggle ? 'right-toggled' : ''">
         <div class="switcher-icon" @click="rightToggle = !rightToggle">
             <i class="zmdi zmdi-settings zmdi-hc-spin"></i>
         </div>
@@ -36,11 +36,21 @@
 
 <script>
 export default {
+    data: () => ({
+        rightToggle: false,
+    }),
+    created() {
+        if (localStorage.getItem("theme_id")) {
+            this.changeTheme(localStorage.getItem("theme_id"));
+        }
+    },
     methods: {
         changeTheme(id) {
+            localStorage.setItem("theme_id", id);
             const totalThemes = Array.from({ length: 15 }, (_, i) => i + 1);
             const newThemeNo = "bg-theme" + id;
             const body = document.getElementById("body");
+
 
             totalThemes.forEach((item) => {
                 const currentThemeClass = "bg-theme" + item;

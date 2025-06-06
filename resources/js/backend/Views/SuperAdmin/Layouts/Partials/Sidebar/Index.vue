@@ -2,15 +2,8 @@
   <!--Start sidebar-wrapper-->
   <div id="sidebar-wrapper">
     <div class="brand-logo">
-      <router-link
-        :to="{ name: `adminDashboard` }"
-        class="d-flex align-items-center"
-      >
-        <img
-          :src="`${get_setting_value('image') ?? 'avatar.png'} `"
-          class="logo-icon"
-          alt="logo icon"
-        />
+      <router-link :to="{ name: `adminDashboard` }" class="d-flex align-items-center">
+        <img :src="`${get_setting_value('image') ?? 'avatar.png'} `" class="logo-icon" alt="logo icon" />
         <h5 class="logo-text">Super Admin Panel</h5>
       </router-link>
       <div class="close-btn">
@@ -19,24 +12,14 @@
     </div>
 
     <div class="text-center mt-3">
-      <img
-        class="rounded-circle p-1"
-        height="70"
-        width="70"
-        :src="`${auth_info.image ?? 'avatar.png'}`"
-        alt=""
-      />
+      <img class="rounded-circle p-1" height="70" width="70" :src="`${auth_info.image ?? 'avatar.png'}`" alt="" />
       <p class="mt-2">Mr. {{ auth_info.name }}</p>
     </div>
     <hr />
     <ul class="metismenu" id="menu">
       <!-- <li class="menu-label">Management</li> -->
       <li>
-        <router-link
-          :to="{ name: `adminDashboard` }"
-          class="border"
-          href="javascript:void();"
-        >
+        <router-link :to="{ name: `adminDashboard` }" class="border" href="javascript:void();">
           <div class="parent-icon">
             <i class="zmdi zmdi-view-dashboard"></i>
           </div>
@@ -56,19 +39,23 @@
         ]"
       />
 
+     
       <side-bar-drop-down-menus
         :icon="`fa fa-plus`"
-        :menu_title="`Blog Management`"
+        :menu_title="`BlogManagement`"
         :menus="[
           {
             route_name: `AllBlogCategory`,
-            title: `Blog Category`,
+            title: `BlogCategory`,
+            icon: `zmdi zmdi-dot-circle-alt`,
+          },          {
+            route_name: `AllBlog`,
+            title: `Blog`,
             icon: `zmdi zmdi-dot-circle-alt`,
           },
         ]"
-      />
-
-      <!-- Management end -->
+/>
+<!-- Management end -->
     </ul>
   </div>
 </template>

@@ -1,4 +1,15 @@
 
-php artisan make:module ProductManagement/ProductCategory [title:string-100,parent_id:int] --vue
-php artisan make:module ProductManagement/ProductSubCategory [product_category_id:int,title:string-100] --vue
-php artisan make:module ProductManagement/Product [title:string,description:text,suppliyer_id:int,product_category_id:int,product_sub_category_id:int] --vue
+/*
+|--------------------------------------------------------------------------
+| Blog Management
+|--------------------------------------------------------------------------
+*/
+php artisan make:module BlogManagement/BlogCategory [title:string-100] --vue
+
+php artisan make:module BlogManagement/Blog [blog_category_id:bigint,title:string-100,description:text,tags:text,publish_date:datetime,writer:string-100,meta_description:text,meta_keywords:string,thumbnail_image:string,image:string,blog_type:string,url:string,show_top:string] --vue
+
+php artisan make:table BlogManagement/Blog/BlogBlogCategory [blog_id:bigint,blog_category_id:bigint] --model
+
+php artisan make:table BlogManagement/Blog/BlogView [blog_id:bigint,user_id:bigint,ip:string] --model
+
+php artisan make:table BlogManagement/Blog/BlogComment [blog_id:bigint,user_id:bigint,name:string,email:string,comment:text] --model
