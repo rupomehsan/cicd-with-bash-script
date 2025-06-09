@@ -2,7 +2,7 @@
   <div class="col-md-6">
     <div class="form-group">
       <label for="">Enter your tag</label>
-      <div class="mt-1 mb-3">
+      <div class="mb-3">
         <div class="bootstrap-tagsinput" style="min-height: 40px">
           <template v-for="item in set_blog_tags" :key="item">
             <span class="tag badge badge-light">{{ item }}<span data-role="remove" @click="removeTag(item)"></span></span>
@@ -30,7 +30,7 @@ export default {
   data: () => ({
     set_blog_tags: [],
     tag_input_value: "",
-    tags: "tag one ,tag two,tag three,",
+    tags: "",
   }),
   created: function () {
     if (this.item) {
@@ -72,4 +72,68 @@ export default {
   },
 };
 </script>
-<style lang=""></style>
+<style scoped>
+.bootstrap-tagsinput {
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  display: inline-block;
+  padding: 4px 6px;
+  color: #555;
+  vertical-align: middle;
+  width: 100%;
+  line-height: 22px;
+  cursor: text;
+}
+
+.bootstrap-tagsinput input {
+  border: none;
+  box-shadow: none;
+  outline: none;
+  background-color: transparent;
+  padding: 0 6px;
+  margin: 0;
+  color: #fff;
+  width: auto;
+  max-width: inherit;
+}
+
+.bootstrap-tagsinput.form-control input::-moz-placeholder {
+  color: #777;
+  opacity: 1;
+}
+
+.bootstrap-tagsinput.form-control input:-ms-input-placeholder {
+  color: #777;
+}
+
+.bootstrap-tagsinput.form-control input::-webkit-input-placeholder {
+  color: #777;
+}
+
+.bootstrap-tagsinput input:focus {
+  border: none;
+  box-shadow: none;
+}
+
+.bootstrap-tagsinput .tag {
+  margin-right: 2px;
+}
+
+.bootstrap-tagsinput .tag [data-role="remove"] {
+  margin-left: 8px;
+  cursor: pointer;
+}
+
+.bootstrap-tagsinput .tag [data-role="remove"]:after {
+  content: "x";
+  padding: 0px 2px;
+}
+
+.bootstrap-tagsinput .tag [data-role="remove"]:hover {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.bootstrap-tagsinput .tag [data-role="remove"]:hover:active {
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+</style>

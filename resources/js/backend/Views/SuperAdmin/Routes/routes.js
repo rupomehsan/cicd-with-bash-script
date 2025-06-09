@@ -6,7 +6,8 @@ import Dashboard from "../Management/Dashboard/Dashboard.vue";
 import SettingsRoutes from "../Management/Settings/setup/routes.js";
 //UserRoutes
 import UserRoutes from "../Management/UserManagement/User/setup/routes.js";
-//routesimport BlogRoutes from '../Management/BlogManagement/Blog/setup/routes.js';
+//routesimport BlogWriterRoutes from '../Management/BlogManagement/BlogWriter/setup/routes.js';
+import BlogRoutes from '../Management/BlogManagement/Blog/setup/routes.js';
 import BlogCategoryRoutes from '../Management/BlogManagement/BlogCategory/setup/routes.js';
 
 
@@ -19,7 +20,8 @@ const routes = {
       component: Dashboard,
       name: "adminDashboard",
     },
-    //management routes        BlogRoutes,
+    //management routes        BlogWriterRoutes,
+        BlogRoutes,
         BlogCategoryRoutes,
 
 

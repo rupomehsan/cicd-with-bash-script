@@ -3248,6 +3248,7 @@ table.grid td {
 .card .table th {
     padding-right: 1.5rem;
     padding-left: 1.5rem;
+    text-align: left;
 }
 
 .table {

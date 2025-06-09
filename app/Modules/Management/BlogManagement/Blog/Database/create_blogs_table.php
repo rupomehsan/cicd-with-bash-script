@@ -23,10 +23,11 @@ return new class extends Migration
             $table->text('meta_description')->nullable();
             $table->string('meta_keywords', 100)->nullable();
             $table->string('thumbnail_image', 100)->nullable();
-            $table->string('image', 100)->nullable();
+            $table->text('images')->nullable();
             $table->string('blog_type', 100)->nullable();
             $table->string('url', 100)->nullable();
             $table->string('show_top', 100)->nullable();
+            $table->json('contributors')->nullable();
 
             $table->bigInteger('creator')->unsigned()->nullable();
             $table->string('slug', 50)->nullable();

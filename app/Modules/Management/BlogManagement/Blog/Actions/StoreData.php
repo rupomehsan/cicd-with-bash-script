@@ -8,6 +8,7 @@ class StoreData
 
     public static function execute($request)
     {
+        dd($request->all());
         try {
             $requestData = $request->validated();
             if ($data = self::$model::query()->create($requestData)) {

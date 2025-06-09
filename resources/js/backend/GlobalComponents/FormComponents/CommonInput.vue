@@ -4,7 +4,7 @@
       <label for="">
         {{ label || name }}
       </label>
-      <div v-if="['text', 'number', 'password', 'email', 'date', 'month', 'radio', 'checkbox'].includes(type)" class="mt-1 mb-3">
+      <div v-if="['text', 'number', 'password', 'email', 'date', 'time', 'datetime-local'].includes(type)" class="mt-1 mb-3">
         <input class="form-control form-control-square mb-2" :type="type" :name="name" :id="name" :value="value" @change="errorReset" />
       </div>
 
@@ -16,7 +16,7 @@
       </div>
 
       <div v-if="type === 'select'" class="mt-1 mb-3">
-        <select :name="name" class="form-control" :id="name" @change="errorReset">
+        <select :name="name" class="form-control form-control-square" :id="name" @change="errorReset">
           <option value="">Select item</option>
           <option v-for="data in data_list" :key="data" :value="data.value" :selected="data.value == value">
             {{ data.label }}
@@ -24,8 +24,7 @@
         </select>
       </div>
       <div v-if="type === 'file'" class="mt-1 mb-3">
-        {{ images_list }}
-        <image-component :name="name" :multiple="multiple" :accept="`.jpg,.jpeg,.png`" :images="multiple ? images_list : value"></image-component>
+        <image-component :name="name" :accept="`.jpg,.jpeg,.png`" :value="value"></image-component>
       </div>
     </div>
   </div>
@@ -109,7 +108,7 @@ export default {
         }
       }
     },
-   
+
     removeTag: function (item) {
       this.remove_tag(item);
     },
@@ -118,70 +117,4 @@ export default {
 };
 </script>
 
-<style>
-.bootstrap-tagsinput {
-  background-color: rgba(255, 255, 255, 0.2);
-  border: 0px solid #ccc;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  display: inline-block;
-  padding: 4px 6px;
-  color: #555;
-  vertical-align: middle;
-  border-radius: 4px;
-  width: 100%;
-  line-height: 22px;
-  cursor: text;
-}
-
-.bootstrap-tagsinput input {
-  border: none;
-  box-shadow: none;
-  outline: none;
-  background-color: transparent;
-  padding: 0 6px;
-  margin: 0;
-  color: #fff;
-  width: auto;
-  max-width: inherit;
-}
-
-.bootstrap-tagsinput.form-control input::-moz-placeholder {
-  color: #777;
-  opacity: 1;
-}
-
-.bootstrap-tagsinput.form-control input:-ms-input-placeholder {
-  color: #777;
-}
-
-.bootstrap-tagsinput.form-control input::-webkit-input-placeholder {
-  color: #777;
-}
-
-.bootstrap-tagsinput input:focus {
-  border: none;
-  box-shadow: none;
-}
-
-.bootstrap-tagsinput .tag {
-  margin-right: 2px;
-}
-
-.bootstrap-tagsinput .tag [data-role="remove"] {
-  margin-left: 8px;
-  cursor: pointer;
-}
-
-.bootstrap-tagsinput .tag [data-role="remove"]:after {
-  content: "x";
-  padding: 0px 2px;
-}
-
-.bootstrap-tagsinput .tag [data-role="remove"]:hover {
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
-}
-
-.bootstrap-tagsinput .tag [data-role="remove"]:hover:active {
-  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-}
-</style>
+<style></style>

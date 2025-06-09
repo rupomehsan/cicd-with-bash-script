@@ -52,6 +52,10 @@
             route_name: `AllBlog`,
             title: `Blog`,
             icon: `zmdi zmdi-dot-circle-alt`,
+          },          {
+            route_name: `AllBlogWriter`,
+            title: `BlogWriter`,
+            icon: `zmdi zmdi-dot-circle-alt`,
           },
         ]"
 />
