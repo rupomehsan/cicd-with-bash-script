@@ -1,11 +1,12 @@
 <template lang="">
   <div class="col-md-6">
     <label> {{ setup.module_name }} </label>
+    <!-- {{ value }} -->
     <div class="custom_drop_down">
-      <div class="selected_list justify-content-between c-pointer" @click="show_list = !show_list">
+      <div class="selected_list  c-pointer position-relative" @click="show_list = !show_list">
         <template v-if="!selected.length">
           <div class="">Select {{ setup.module_name }}</div>
-          <i :class="show_list ? 'fa fa-angle-up' : 'fa fa-angle-down'"></i>
+          <i :class="show_list ? 'fa fa-angle-up' : 'fa fa-angle-down'"  style="position: absolute; right: 10px;"></i>
         </template>
 
         <template v-else>
@@ -72,14 +73,20 @@ export default {
     },
   },
   created: function () {
-    if (!this.all?.data?.lenght) {
+    if (!this.all?.data?.length) {
       this.get_all();
     }
     this.$watch("value", function (v) {
-      v.forEach((i) => {
-        this.set_selected(i);
-      });
-    });
+      // If value is an array of objects, set selected directly
+      if (Array.isArray(v) && v.length && typeof v[0] === 'object') {
+        this.selected = v;
+      } else if (Array.isArray(v) && this.all && Array.isArray(this.all.data)) {
+        // fallback for array of ids, only if all.data is available
+        this.selected = this.all.data.filter(item => v.includes(item.id));
+      } else {
+        this.selected = [];
+      }
+    }, { immediate: true });
   },
   data: () => ({
     selected: [],
@@ -100,9 +107,12 @@ export default {
         this.selected = [item];
         return;
       }
-
-      if (event.target.checked) {
-        this.selected.push(item);
+      // Defensive: event may be undefined when called from watcher
+      const checked = event && event.target ? event.target.checked : true;
+      if (checked) {
+        if (!this.selected.find((i) => i.id === item.id)) {
+          this.selected.push(item);
+        }
       } else {
         this.selected = this.selected.filter((i) => i.id != item.id);
       }

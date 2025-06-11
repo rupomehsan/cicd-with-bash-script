@@ -7,6 +7,7 @@
           <template v-for="item in set_blog_tags" :key="item">
             <span class="tag badge badge-light">{{ item }}<span data-role="remove" @click="removeTag(item)"></span></span>
           </template>
+          <input type="hidden" :name="name" :value="set_blog_tags.join(',')" />
           <input type="text" placeholder="" v-on:keydown.enter="onEnter" v-model="tag_input_value" />
         </div>
       </div>
@@ -33,13 +34,15 @@ export default {
     tags: "",
   }),
   created: function () {
-    if (this.item) {
-      let tagData = this.tags.split(",");
-      tagData.pop();
-      tagData.forEach((item) => {
-        this.set_tags(item);
-      });
-    }
+    this.$watch(
+      "item",
+      (newValue) => {
+        if (newValue) {
+          this.set_blog_tags = newValue.tags ? newValue.tags.split(",").filter((tag) => tag) : [];
+        }
+      },
+      { immediate: true }
+    );
   },
 
   methods: {

@@ -205,7 +205,7 @@ export default {
   }),
 
   created: async function () {
-    // await this.get_all_pending_expense();
+    
   },
 
   methods: {
@@ -239,9 +239,8 @@ export default {
    
 
     mark_as_seen: async function (voucher) {
-      axios.post(`account-expenses/update/${voucher.slug}?mark_as_seen=1`);
-      // this.get_all_pending_expense();
-      this.$router.push({ name: "AllPendingVoucher" });
+     
+      
     },
   },
 

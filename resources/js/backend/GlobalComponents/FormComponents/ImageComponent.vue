@@ -1,15 +1,18 @@
 <template>
   <div>
-    <input @change="preview" class="form-control form-control-square" type="file" ref="input_files" :accept="accept" :class="classNames" :name="name" />
+    <input
+      @change="preview"
+      class="form-control form-control-square"
+      type="file"
+      ref="input_files"
+      :accept="accept"
+      :class="classNames"
+      :name="name"
+    />
 
     <div v-if="image_preview && image_preview != ''" class="d-flex justify-content-start align-items-start">
       <a :href="image_preview" data-lightbox="image-preview" data-title="Preview">
-        <img
-          :src="image_preview"
-          class="mt-2 image-preview-img"
-          alt="image"
-          target="_black"
-        />
+        <img :src="image_preview" class="mt-2 image-preview-img" alt="image" target="_black" />
       </a>
 
       <button class="btn btn-warning btn-sm mt-2 p-1 image-remove-btn" @click.prevent="remove">X</button>
@@ -43,9 +46,15 @@ export default {
   }),
 
   created: function () {
-    if (this.value) {
-      this.image_preview = this.value;
-    }
+    this.$watch(
+      "value",
+      (newValue) => {
+        if (newValue) {
+          this.image_preview = newValue;
+        }
+      },
+      { immediate: true }
+    );
   },
 
   methods: {
@@ -83,4 +92,3 @@ export default {
   position: static;
 }
 </style>
-

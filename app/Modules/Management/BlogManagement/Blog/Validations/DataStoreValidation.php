@@ -51,10 +51,11 @@ class DataStoreValidation extends FormRequest
             'meta_description' => 'required | sometimes',
             'meta_keywords' => 'required | sometimes',
             'thumbnail_image' => 'required | sometimes',
-            'image' => 'required | sometimes',
+            'images' => 'required | sometimes',
             'blog_type' => 'required | sometimes',
             'url' => 'required | sometimes',
             'show_top' => 'required | sometimes',
+            'contributors' => 'sometimes',
             'status' => ['sometimes', Rule::in(['active', 'inactive'])],
         ];
     }

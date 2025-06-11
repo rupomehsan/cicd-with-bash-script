@@ -37,120 +37,10 @@
               />
             </template>
             <multi-chip :name="`tags`" />
-            <blog-category-drop-down-el :name="'categories'" :multiple="true" />
-            <blog-writer-drop-down-el :name="'writers'" :multiple="false" />
-            <multiple-image-uploader :name="form_field.name" :accept="form_field.accept" :images="form_field.images_list" />
-            <div class="col-md-12">
-              <hr />
-              <div class="d-flex justify-content-between align-items-center pb-2 section-title">
-                <h5 class="m-0">Add Contributors</h5>
-                <button class="btn btn-sm btn-outline-success" @click.prevent="add_row('contributor')">Add row</button>
-              </div>
-              <hr />
-              <div class="row align-items-center" v-for="(contributor, index) in contributor_data" :key="index">
-                <div class="col-md-3">
-                  <div class="form-group">
-                    <label for="">name</label>
-                    <div class="mt-1 mb-3">
-                      <input
-                        class="form-control form-control-square mb-2"
-                        type="text"
-                        :name="`contributor[${index}][name]`"
-                        v-model="contributor.name"
-                        id="name"
-                        :class="{
-                          custom_error: errors['contributor'] && errors['contributor'][index] && errors['contributor'][index].name,
-                        }"
-                      />
-                    </div>
-                    <div v-if="errors['contributor'] && errors['contributor'][index] && errors['contributor'][index].name" class="text-danger small">
-                      {{ errors["contributor"][index].name }}
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-2">
-                  <div class="form-group">
-                    <label for="">Age</label>
-                    <div class="mt-1 mb-3">
-                      <select
-                        class="form-control form-control-square mb-2"
-                        :name="`contributor[${index}][age]`"
-                        v-model="contributor.age"
-                        :class="{
-                          custom_error: errors['contributor'] && errors['contributor'][index] && errors['contributor'][index].age,
-                        }"
-                      >
-                        <option value="">-- select --</option>
-                        <option v-for="(age, i) in 50" :key="i" :value="age">
-                          {{ age }}
-                        </option>
-                      </select>
-                    </div>
-                    <div v-if="errors['contributor'] && errors['contributor'][index] && errors['contributor'][index].age" class="text-danger small">
-                      {{ errors["contributor"][index].age }}
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="form-group">
-                    <label for="">email</label>
-                    <div class="mt-1 mb-3">
-                      <input
-                        class="form-control form-control-square mb-2"
-                        type="text"
-                        :name="`contributor[${index}][email]`"
-                        v-model="contributor.email"
-                        id="email"
-                        :class="{
-                          custom_error: errors['contributor'] && errors['contributor'][index] && errors['contributor'][index].email,
-                        }"
-                      />
-                    </div>
-                    <div v-if="errors['contributor'] && errors['contributor'][index] && errors['contributor'][index].email" class="text-danger small">
-                      {{ errors["contributor"][index].email }}
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="form-group">
-                    <div>
-                      <label for="">image</label>
-                      <a :href="contributor_data[index].image" data-lightbox="image-1" data-title="My caption">
-                        <img class="image_preview" v-if="contributor_data[index].image" :src="contributor_data[index].image" />
-                      </a>
-                    </div>
-
-                    <div class="mt-1 mb-3">
-                      <input
-                        class="form-control form-control-square mb-2"
-                        type="file"
-                        @change="onImageChange($event, index)"
-                        :name="`contributor[${index}][image]`"
-                        id="image"
-                        :class="{
-                          custom_error: errors['contributor'] && errors['contributor'][index] && errors['contributor'][index].image,
-                        }"
-                      />
-                    </div>
-                    <div v-if="errors['contributor'] && errors['contributor'][index] && errors['contributor'][index].image" class="text-danger small">
-                      {{ errors["contributor"][index].image }}
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-1 d-flex align-items-center justify-content-center">
-                  <button
-                    class="btn btn-sm btn-outline-danger"
-                    :style="{
-                      width: '50%',
-                      marginTop: !errors['contributor']?.[index]?.title ? '30px' : '0',
-                    }"
-                    @click.prevent="delete_row('contributor', index)"
-                  >
-                    <i class="fa fa-trash"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
+            <blog-category-drop-down-el :name="'blog_categories'" :multiple="true" :value="item.blog_categories" />
+            <blog-writer-drop-down-el :name="'writer'" :multiple="false" :value="[item.writer]" />
+            <multiple-image-uploader :name="'images'" :accept="'image/*'" :images="item.images" />
+            <multiple-input-field :name="'contributors'" />
           </div>
         </div>
         <div class="card-footer">
@@ -173,6 +63,7 @@ import MultiChip from "../components/meta_component/MultiChip.vue";
 import BlogCategoryDropDownEl from "../../BlogCategory/components/dropdown/DropDownEl.vue";
 import BlogWriterDropDownEl from "../../BlogWriter/components/dropdown/DropDownEl.vue";
 import MultipleImageUploader from "../components/meta_component/MultipleImageUploader.vue";
+import MultipleInputField from "../components/meta_component/MultipleInputField.vue";
 
 export default {
   components: {
@@ -180,28 +71,13 @@ export default {
     BlogCategoryDropDownEl,
     BlogWriterDropDownEl,
     MultipleImageUploader,
+    MultipleInputField,
   },
   data: () => ({
     setup,
     form_fields,
     param_id: null,
-    form_field: {
-      name: "images",
-      accept: "image/*",
-      images_list: [],
-    },
-    errors: [],
-    //----------- for floor_plan list input ----------
-
-    contributor_data: [
-      {
-        name: "",
-        email: "",
-        image: "",
-      },
-    ],
-
-    //----------- for floor_plan list input ----------
+   
   }),
   created: async function () {
     let id = (this.param_id = this.$route.params.id);
@@ -232,6 +108,10 @@ export default {
             if (field.name == value[0]) {
               this.form_fields[index].value = value[1];
             }
+
+            if (field.name == "description" && value[0] == "description") {
+              $("#description").summernote("code", value[1]);
+            }
           });
         });
       }
@@ -240,6 +120,7 @@ export default {
     submitHandler: async function ($event) {
       this.set_only_latest_data(true);
       if (this.param_id) {
+        this.setSummerEditor();
         let response = await this.update($event);
         // await this.get_all();
         if ([200, 201].includes(response.status)) {
@@ -247,6 +128,7 @@ export default {
           this.$router.push({ name: `Details${this.setup.route_prefix}` });
         }
       } else {
+        this.setSummerEditor();
         let response = await this.create($event);
         // await this.get_all();
         if ([200, 201].includes(response.status)) {
@@ -255,12 +137,13 @@ export default {
         }
       }
     },
-    add_row() {
-      this.contributor_data.push({
-        name: "",
-        email: "",
-        image: "",
-      });
+    setSummerEditor() {
+      // Set property_detail summernote content
+      var markupStr = $("#description").summernote("code");
+      var target = document.createElement("input");
+      target.setAttribute("name", "description");
+      target.value = markupStr;
+      document.getElementById("description").appendChild(target);
     },
   },
 
@@ -271,3 +154,5 @@ export default {
   },
 };
 </script>
+
+<style scoped></style>

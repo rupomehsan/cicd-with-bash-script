@@ -1,6 +1,7 @@
 <template lang="">
   <div class="col-md-6">
     <label> {{ setup.module_name }} </label>
+    <!-- {{ value }} -->
     <div class="custom_drop_down">
       <div class="selected_list justify-content-between c-pointer" @click="show_list = !show_list">
         <template v-if="!selected.length">

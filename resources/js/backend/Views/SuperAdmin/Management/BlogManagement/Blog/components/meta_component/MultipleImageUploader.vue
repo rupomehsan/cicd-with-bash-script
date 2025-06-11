@@ -20,14 +20,16 @@
         <!-- {{ component_images }} -->
         <template v-for="(image, index) in component_images" :key="image">
           <div class="position-relative my-1">
-            <img
-              :src="image.url ? image.url : image"
-              :class="image != '' ? 'border' : ''"
-              style="width: 200px; height: 80px; object-fit: contain"
-              alt="image"
-              target="_black"
-              class="mx-1"
-            />
+            <a :href="image.url ? image.url : image" data-lightbox="images-preview" data-title="Preview">
+              <img
+                :src="image.url ? image.url : image"
+                :class="image != '' ? 'border' : ''"
+                style="width: 200px; height: 80px; object-fit: contain"
+                alt="image"
+                target="_black"
+                class="mx-1"
+              />
+            </a>
             <button
               class="btn btn-outline-warning btn-roun btn-sm"
               :class="`id-${image.id} index-${index}`"

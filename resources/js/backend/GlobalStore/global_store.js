@@ -11,11 +11,6 @@ export const global_store = defineStore("global_store", {
     },
   },
   actions: {
-    get_all_pending_expense: async function () {
-      let response = await axios.get("account-expenses?is_seen=0&get_all=1");
-      if (response.status == 200) {
-        this.unseen_vouchers = response.data.data;
-      }
-    },
+   
   },
 });

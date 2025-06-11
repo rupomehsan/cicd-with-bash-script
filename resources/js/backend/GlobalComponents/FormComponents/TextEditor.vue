@@ -38,7 +38,7 @@ export default {
             setTimeout(function () {
                 let target = document.querySelector(`[data-bs-original-title="${style}"]`);
                 let targetClass = document.querySelector(`.${classname}`);
-                target.addEventListener('click', function () {
+                target?.addEventListener('click', function () {
                     targetClass.classList.toggle('show');
                     if (classname == 'note-color' || classname == 'note-table') {
                         target.nextSibling.classList.toggle('show')
