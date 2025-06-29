@@ -121,6 +121,12 @@ This project uses custom deployment scripts and file tracking for efficient and 
 
 You can use npm scripts to run your deployment easily:
 
+- To initialize or update the file tracker (run this at the start of the project, or whenever file tracking is not active):
+
+  ```bash
+  npm run deploy:track
+  ```
+
 - To deploy the whole project:
   ```bash
   npm run deploy:project
@@ -128,8 +134,4 @@ You can use npm scripts to run your deployment easily:
 - To deploy only modified files (via file tracking):
   ```bash
   npm run deploy:files
-  ```
-- To initialize or update the file tracker (run this at the start of the project, or whenever file tracking is not active):
-  ```bash
-  npm run deploy:track
   ```
