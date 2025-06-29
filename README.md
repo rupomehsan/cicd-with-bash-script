@@ -129,3 +129,7 @@ You can use npm scripts to run your deployment easily:
   ```bash
   npm run deploy:files
   ```
+- To initialize or update the file tracker (run this at the start of the project, or whenever file tracking is not active):
+  ```bash
+  npm run deploy:track
+  ```
