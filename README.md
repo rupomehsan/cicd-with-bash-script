@@ -272,4 +272,15 @@ This project uses custom deployment scripts and file tracking for efficient and 
 
 ---
 
-For further help, check the comments in each script or ask your team lead.
+## 9. NPM Deployment Commands
+
+You can use npm scripts to run your deployment easily:
+
+- To deploy the whole project:
+  ```bash
+  npm run deploy:project
+  ```
+- To deploy only modified files (via file tracking):
+  ```bash
+  npm run deploy:files
+  ```

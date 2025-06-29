@@ -8,7 +8,9 @@
         "serve": "php artisan serve --host 0.0.0.0 --port 8007",
         "scss": "npx sass public/frontend/assets/scss/appstyle.scss public/frontend/assets/css/appstyle.css -w",
         "reload": "php artisan db:wipe && php artisan migrate && php artisan migrate --path=app/Modules/* && php artisan migrate --path=app/Modules/*/* && php artisan migrate --path=app/Modules/*/*/*  && php artisan migrate --path=app/Modules/*/*/*/*  && php artisan db:seed && php artisan passport:install",
-        "migrate": "php artisan migrate --path=app/Modules/*/*/*"
+        "migrate": "php artisan migrate --path=app/Modules/*/*/*",
+        "deploy:project": "bash .deploy_tools/deploy_to_vps.sh",
+        "deploy:files": "bash .deploy_tools/deploy_to_vps_via_file_tracking.sh"
     },
     "devDependencies": {
         "@popperjs/core": "^2.11.6",
