@@ -14,3 +14,12 @@ use Illuminate\Support\Str;
 Route::get('/test', function () {
     dd("test something");
 });
+Route::get('/test', function () {
+    dd("test something");
+});
+Route::get('/test', function () {
+    dd("test something");
+});
+Route::get('/test-something-here', function () {
+    dd("test something");
+});

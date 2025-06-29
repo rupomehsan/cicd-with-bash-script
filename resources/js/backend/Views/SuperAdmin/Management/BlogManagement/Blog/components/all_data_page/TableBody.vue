@@ -14,6 +14,22 @@
       <td v-if="row_item == 'id'">
         {{ dataindex + 1 }}
       </td>
+      <td
+        v-else-if="row_item === 'thumbnail_image'"
+        class="text-wrap max-w-120"
+      >
+        <a
+          :href="item[row_item]"
+          data-lightbox="blog-image"
+          data-title="Preview"
+        >
+          <img
+            :src="item[row_item]"
+            style="width: 60px; height: 40px; object-fit: cover"
+            alt="image"
+          />
+        </a>
+      </td>
       <td v-else class="text-wrap max-w-120">
         {{ trim_content(item[row_item], row_item) }}
       </td>
@@ -43,7 +59,7 @@ export default {
         if (row_item == "created_at" || row_item == "updated_at") {
           return new Date(content).toLocaleTimeString();
         }
-        return content.length > 50 ? content.substring(0, 50) + "..." : content;
+        return content.length > 50 ? content.substring(0, 25) + "..." : content;
       }
       if (content && typeof content === "object") {
         for (const key of Object.keys(content)) {

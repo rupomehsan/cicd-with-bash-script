@@ -39,7 +39,7 @@ const setup: setup_type = {
 
   sort_by_cols: [
     "id",
-    "blog_category_id",
+
     "title",
     "description",
     "tags",
@@ -48,8 +48,7 @@ const setup: setup_type = {
     "meta_description",
     "meta_keywords",
     "thumbnail_image",
-    "images",
-    "blog_type",
+
     "url",
     "show_top",
     "status",
@@ -57,7 +56,7 @@ const setup: setup_type = {
   ],
   table_header_data: [
     "id",
-    "blog_category_id",
+
     "title",
     "description",
     "tags",
@@ -66,8 +65,7 @@ const setup: setup_type = {
     "meta_description",
     "meta_keywords",
     "thumbnail_image",
-    "images",
-    "blog_type",
+
     "url",
     "show_top",
     "status",
@@ -75,7 +73,6 @@ const setup: setup_type = {
   ],
   table_row_data: [
     "id",
-    "blog_category_id",
     "title",
     "description",
     "tags",
@@ -84,8 +81,6 @@ const setup: setup_type = {
     "meta_description",
     "meta_keywords",
     "thumbnail_image",
-    "images",
-    "blog_type",
     "url",
     "show_top",
     "status",
