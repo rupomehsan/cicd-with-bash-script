@@ -5,6 +5,18 @@
 This project uses custom deployment scripts and file tracking for efficient and safe updates to your server. Below are step-by-step instructions for setup, usage, and troubleshooting.
 
 ---
+Before deploying to your server, set up SSH key authentication for secure and passwordless access:
+
+1. **Generate an SSH key (if you don't have one):**
+   ```bash
+   ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+   ```
+2. **Copy your public key to the server:**
+   ```bash
+   ssh-copy-id root@159.12.123.123
+   ```
+
+---
 
 ## 1. Folder Structure
 
